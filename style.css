@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap");
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+._combobox-margin {
+  margin-top: 100px;
+}
+
+.combobox {
+  width: 300px;
+  height: 50px;
+  border: rgba(0, 0, 0, 0.5) 1px solid;
+  border-radius: 10px;
+}
+
+.combobox__input {
+  display: inline-block;
+  border: #FFFFFF;
+  width: 250px;
+  height: 30px;
+  margin: 10px;
+  outline: none;
+}
+
+.combobox__button {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-color: #FFFFFF;
+}
+
+.combobox__arrow {
+  width: 15px;
+  height: 15px;
+}
+
+.combobox__arrow:hover {
+  cursor: pointer;
+  background-color: rgba(131, 128, 128, 0.2);
+  border-radius: 20px;
+}
+
+.combobox__list-container {
+  display: none;
+  width: 300px;
+  min-height: 30px;
+  border-radius: 5px;
+  border: rgba(0, 0, 0, 0.1) 1px solid;
+}
+
+.combobox__list {
+  padding: 0;
+  margin: 0;
+}
+
+.combobox__item {
+  margin: 0;
+  padding: 0 0 0 20px;
+  list-style: none;
+}
+
+.combobox__item:hover {
+  background-color: #f9f7f4;
+  cursor: pointer;
+}
+
+.active-arrow {
+  display: block;
+}
