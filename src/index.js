@@ -84,11 +84,7 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
     listContainer.appendChild(list)
     list.classList.add('list')
 
-    list.addEventListener('click', function () {
-      var list = wrapper.childNodes[2].firstChild
-
-      list.addEventListener('click', pickItem)
-    })
+    list.addEventListener('click', pickItem)
   }
 
   function clearList() {
