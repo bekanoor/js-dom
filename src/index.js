@@ -229,10 +229,23 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
     input.addEventListener('keyup', match)
   }
 
-  this.create = function () {
+  this.add = function () {
     createCombobox()
     createList(data)
     search()
+  }
+  this.setValue = function (value) {
+    var input = wrapper.childNodes[1].firstChild
+
+    input.value = '';
+    input.value = value;
+  }
+  this.getValue = function () {
+    var input = wrapper.childNodes[1].firstChild
+
+    console.log(input.value)
+
+    return input.value
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -244,8 +257,10 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
 
 const gameList = new ComboboxCreator(container1, games, 'games', function(){console.dir()})
 
-gameList.create()
+gameList.add()
+gameList.setValue('new game or smt else')
+gameList.getValue()
 
 const moviesList = new ComboboxCreator(container2, movies, 'movies')
 
-moviesList.create()
+moviesList.add()
