@@ -184,11 +184,23 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
         var copy = JSON.parse(JSON.stringify(data))
 
         for (key in copy[i]) {
+          if (!String.prototype.startsWith) {
+            Object.defineProperty(String.prototype, 'startsWith', {
+              enumerable: false,
+              configurable: false,
+              writable: false,
+              value: function(searchString, position) {
+                position = position || 0;
+                return this.indexOf(searchString, position) === position;
+              }
+            });
+          }
+
           if (key === 'label') copy[i][key] = copy[i][key].toLowerCase()
 
           if (
             key === 'label' &&
-            copy[i][key].indexOf(search.toLowerCase()) !== -1
+            copy[i][key].startsWith(search)
           )
             results.push(data[i])
         }
