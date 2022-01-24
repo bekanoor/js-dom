@@ -107,10 +107,6 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
     listContainer.classList.remove('active-dropdown')
   }
 
-  this.fillList = function () {
-    createList(data)
-  }
-
   function scrollController(data) {
     var container = wrapper.childNodes[2]
 
@@ -119,7 +115,7 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
       : container.classList.remove('_scroll')
   }
 
-  this.createCombobox = function () {
+  function createCombobox() {
     var comboboxDiv = document.createElement('div')
     comboboxDiv.classList.add('combobox')
 
@@ -180,7 +176,7 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
     })
   }
 
-  this.search = function () {
+  function search() {
     var input = wrapper.childNodes[1].firstChild
 
     var match = function (e) {
@@ -225,6 +221,12 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
     input.addEventListener('keyup', match)
   }
 
+  this.create = function () {
+    createCombobox()
+    createList(data)
+    search()
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var list = wrapper.childNodes[2].firstChild
 
@@ -232,14 +234,10 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
   })
 }
 
-const gameList = new ComboboxCreator(container1, games, 'games')
+const gameList = new ComboboxCreator(container1, games, 'games', function(){console.dir()})
 
-gameList.createCombobox()
-gameList.fillList()
-gameList.search()
+gameList.create()
 
 const moviesList = new ComboboxCreator(container2, movies, 'movies')
 
-moviesList.createCombobox()
-moviesList.fillList()
-moviesList.search()
+moviesList.create()
