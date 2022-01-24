@@ -4,20 +4,26 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   box-sizing: border-box;
+  min-height:100vh;
+}
+
+input::-ms-clear {
+  display: none;
 }
 
 .wrapper {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   display: flex;
+  
   justify-content: space-between;
 }
 
 .combobox-container-1, .combobox-container-2  {
-
+  position: relative;
 }
 ._combobox-margin {
-  margin-top: 100px;
+  margin-top: 150px;
 }
 .combobox {
   width: 300px;
@@ -28,7 +34,7 @@ body {
   &__input {
     display: inline-block;
     border: #FFFFFF;
-    width: 250px;
+    width: 220px;
     height: 30px;
     margin: 10px;
     outline:none;
@@ -39,6 +45,16 @@ body {
     height: 25px;
     border: none;
     background-color: #FFFFFF;
+  }
+  &__cross {
+    width: 15px;
+    height: 15px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($color: #838080, $alpha: .2);
+      border-radius: 20px;
+    }
   }
   &__arrow {
     width: 15px;
@@ -52,15 +68,22 @@ body {
   }
   &__list-container {
     display: none;
+    position: absolute;
+    top: 52px;
+    left: 0;
+    z-index: 1;
     width: 300px;
-    min-height: 30px;
+    height: 110px;
+    overflow: hidden;
     border-radius: 5px;
     border:rgba($color: #000000, $alpha: .1) 1px solid;
   }
-  &__list {
-    padding: 0;
-    margin: 0;
-  }
+}
+.list {
+  padding: 0;
+  margin: 0;
+  background-color: #FFFFFF;
+
   &__item {
     margin: 0;
     padding: 0 0 0 20px;
@@ -71,6 +94,21 @@ body {
     }
   }
 }
-.active-arrow {
+.active-dropdown {
   display: block;
+}
+._top-direction {
+  position: absolute;
+  top: -112px;
+  left: 0;
+}
+._scroll {
+  overflow: scroll;
+  overflow-x: hidden;
+} 
+
+._no-options {
+  margin-top: 20px;
+  text-align: center;
+  font-style: italic;
 }

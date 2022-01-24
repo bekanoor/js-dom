@@ -1,90 +1,245 @@
-var container1 = document.querySelector('.combobox-container-1');
-var container2 = document.querySelector('.combobox-container-2');
+var container1 = document.querySelector('.combobox-container-1')
+var container2 = document.querySelector('.combobox-container-2')
 
 var games = [
   {
-    label: 'witcher 3',
+    label: 'Witcher 3',
     id: 0,
   },
   {
-    label: 'super meat boy',
+    label: 'Super meat boy',
     id: 1,
   },
   {
-    label: 'elden ring',
+    label: 'Elden ring',
     id: 2,
   },
   {
-    label: 'dark souls 3',
+    label: 'Dark souls 3',
     id: 3,
   },
   {
-    label: 'sekiro',
+    label: 'Sekiro',
     id: 4,
   },
   {
-    label: 'resident evil 2 remake',
+    label: 'Resident evil 2 remake',
     id: 5,
   },
-];
+  {
+    label: 'Visage',
+    id: 6,
+  },
+  {
+    label: 'Everlasting summer',
+    id: 7,
+  },
+  {
+    label: 'Half-life 3',
+    id: 8,
+  },
+]
 
+var movies = [
+  {
+    label: 'Forrest Gump',
+    id: 0,
+  },
+  {
+    label: 'The house Jack built',
+    id: 1,
+  },
+  {
+    label: 'Terminator 2: Judgment Day',
+    id: 2,
+  },
+  {
+    label: 'Spider-man 2',
+    id: 3,
+  },
+  {
+    label: 'Gummi Bears',
+    id: 4,
+  },
+]
 
-function ComboboxCreator (wrapper, data, placeholder) {
-  var placeholder = placeholder;
-  var wrapper = wrapper;
-  var data = data;
+function ComboboxCreator(wrapper, data, placeholder, onChange) {
+  var placeholder = placeholder
+  var wrapper = wrapper
+  var data = data
+
+  function createList(data) {
+    var listContainer = wrapper.childNodes[2]
+    var list = document.createElement('ul')
+
+    data.map(function (item) {
+      var text = document.createElement('li')
+
+      text.classList.add('list__item')
+      text.textContent = item.label
+      text.id = item.id
+      list.appendChild(text)
+    })
+
+    listContainer.appendChild(list)
+    list.classList.add('list')
+
+    list.addEventListener('click', function () {
+      var list = wrapper.childNodes[2].firstChild
+
+      list.addEventListener('click', pickItem)
+    })
+  }
+
+  function clearList() {
+    var listContainer = wrapper.childNodes[2]
+
+    listContainer.removeChild(listContainer.firstChild)
+  }
+
+  function pickItem(e) {
+    console.log(e.target)
+
+    var listContainer = wrapper.childNodes[2]
+    var input = wrapper.childNodes[1].firstChild
+
+    input.value = e.target.textContent
+    listContainer.classList.remove('active-dropdown')
+  }
 
   this.fillList = function () {
-    var list = document.createElement('ul');
-    list.classList.add('combobox__list');
+    createList(data)
+  }
 
-    var container = document.querySelector('.combobox__list-container');
-    data.map( function(item) {
-      var text = document.createElement('li');
+  function scrollController(data) {
+    var container = wrapper.childNodes[2]
 
-      text.classList.add('combobox__item');
-      text.textContent = item.label;
-      text.id = item.id;
-      list.appendChild(text);
-    });
-
-    container.appendChild(list);
-    list.addEventListener('click', function () {console.log('hi')});
+    data.length > 5
+      ? container.classList.add('_scroll')
+      : container.classList.remove('_scroll')
   }
 
   this.createCombobox = function () {
-    var comboboxDiv = document.createElement('div');
-    comboboxDiv.classList.add('combobox');
+    var comboboxDiv = document.createElement('div')
+    comboboxDiv.classList.add('combobox')
 
-    var input = document.createElement('input');
-    input.classList.add('combobox__input');
-    input.setAttribute('placeholder', placeholder);
+    var input = document.createElement('input')
+    input.classList.add('combobox__input')
+    input.setAttribute('placeholder', placeholder)
 
-    var button = document.createElement('button');
-    button.classList.add('combobox__button');
-    button.innerHTML = '<img class="combobox__arrow" src="https://img.icons8.com/external-kmg-design-basic-outline-kmg-design/32/000000/external-down-arrow-arrows-kmg-design-basic-outline-kmg-design.png"/>';
+    var cross = document.createElement('button')
+    cross.classList.add('combobox__button')
+    cross.innerHTML =
+      '<img class="combobox__cross" src="https://img.icons8.com/fluency-systems-filled/48/000000/x.png"/>'
 
-    var list = document.createElement('div');
-    list.classList.add('combobox__list-container');
+    var arrow = document.createElement('button')
+    arrow.classList.add('combobox__button')
+    arrow.innerHTML =
+      '<img class="combobox__arrow" on src="https://img.icons8.com/external-kmg-design-basic-outline-kmg-design/32/000000/external-down-arrow-arrows-kmg-design-basic-outline-kmg-design.png"/>'
 
-    wrapper.appendChild(comboboxDiv);
-    comboboxDiv.appendChild(input);
-    comboboxDiv.appendChild(button);
-    wrapper.appendChild(list);
+    var list = document.createElement('div')
+    list.classList.add('combobox__list-container')
 
-    var showCBList = function() {
-      list.classList.contains('active-arrow') ? list.classList.remove('active-arrow') : list.classList.add('active-arrow')
-    };
+    var showCBList = function () {
+      list.classList.contains('active-dropdown')
+        ? list.classList.remove('active-dropdown')
+        : list.classList.add('active-dropdown')
+      scrollController(data)
+    }
 
-    button.addEventListener('click', showCBList);
-    input.addEventListener('focus', showCBList);
-    input.addEventListener('blur', function() {
-      list.classList.remove('active-arrow')
-    });
+    comboboxDiv.appendChild(input)
+    comboboxDiv.appendChild(cross)
+    comboboxDiv.appendChild(arrow)
+    wrapper.appendChild(comboboxDiv)
+    wrapper.appendChild(list)
+
+    arrow.addEventListener('click', showCBList)
+    input.addEventListener('focus', showCBList)
+    cross.addEventListener('click', function () {
+      input.value = ''
+      clearList()
+      createList(data)
+    })
+    document.body.addEventListener('mousedown', function (e) {
+      if (!e.target.classList[0] || e.target.classList[0] === 'wrapper')
+        list.classList.remove('active-dropdown')
+    })
+    window.addEventListener('resize', function () {
+      var space = window.innerHeight - wrapper.offsetTop;
+      
+      list.classList.remove('active-dropdown')
+      
+      if (space < 170) {
+        list.classList.add('_top-direction')
+      } else {
+        list.classList.remove('_top-direction')
+      }
+    })
+    window.addEventListener('scroll', function () {
+      list.classList.remove('active-dropdown')
+    })
   }
+
+  this.search = function () {
+    var input = wrapper.childNodes[1].firstChild
+
+    var match = function (e) {
+      var list = wrapper.childNodes[2].firstChild
+      var results = []
+      var search = e.target.value
+
+      for (var i = 0; i < data.length; i++) {
+        var copy = JSON.parse(JSON.stringify(data))
+
+        for (key in copy[i]) {
+          if (key === 'label') copy[i][key] = copy[i][key].toLowerCase()
+
+          if (
+            key === 'label' &&
+            copy[i][key].indexOf(search.toLowerCase()) !== -1
+          )
+            results.push(data[i])
+        }
+      }
+
+      clearList()
+
+      createList(results)
+
+      scrollController(results)
+
+      if (results.length === 0 && search.length > 0) {
+        var list = wrapper.childNodes[2].firstChild
+        var li = document.createElement('li')
+
+        li.classList.add('_no-options')
+        li.textContent = 'No options'
+
+        list.appendChild(li)
+        return
+      }
+
+      list.addEventListener('click', pickItem)
+    }
+
+    input.addEventListener('keyup', match)
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var list = wrapper.childNodes[2].firstChild
+
+    list.addEventListener('click', pickItem)
+  })
 }
 
-const gameList = new ComboboxCreator(container1, games, 'games');
+const gameList = new ComboboxCreator(container1, games, 'games')
 
-gameList.createCombobox();
-gameList.fillList();
+gameList.createCombobox()
+gameList.fillList()
+gameList.search()
+
+const moviesList = new ComboboxCreator(container2, movies, 'movies')
+
+moviesList.createCombobox()
+moviesList.fillList()
+moviesList.search()
