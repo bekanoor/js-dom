@@ -94,10 +94,11 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
   }
 
   function pickItem(e) {
-    console.log(e.target)
-
     var listContainer = wrapper.childNodes[2]
     var input = wrapper.childNodes[1].firstChild
+
+    onChange(e.target.textContent)
+    onChange(e.target.id)
 
     input.value = e.target.textContent
     listContainer.classList.remove('active-dropdown')
@@ -151,6 +152,7 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
       input.value = ''
       clearList()
       createList(data)
+      onChange('clear')
     })
     document.body.addEventListener('mousedown', function (e) {
       if (!e.target.classList[0] || e.target.classList[0] === 'wrapper')
@@ -243,8 +245,6 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
   this.getValue = function () {
     var input = wrapper.childNodes[1].firstChild
 
-    console.log(input.value)
-
     return input.value
   }
 
@@ -255,11 +255,11 @@ function ComboboxCreator(wrapper, data, placeholder, onChange) {
   })
 }
 
-const gameList = new ComboboxCreator(container1, games, 'games', function(){console.dir()})
+const gameList = new ComboboxCreator(container1, games, 'games', function(item){
+  console.dir(item)
+})
 
 gameList.add()
-gameList.setValue('new game or smt else')
-gameList.getValue()
 
 const moviesList = new ComboboxCreator(container2, movies, 'movies')
 
